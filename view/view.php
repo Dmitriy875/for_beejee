@@ -19,8 +19,9 @@ class View {
   // NOTE: Looks like schizophrenia. Maybe. But I really like to check everything.
   public static function getCssFiles() {
     foreach( self::$trustedCssFiles as $cssFile => $template) {
-      if( file_exists( "view/templates/" . self::$currentTemplate."/css/" . $cssFile)){
-        self::$cssFilesToConnect[] .= $cssFile;
+      $filePath = "view/templates/" . self::$currentTemplate."/css/" . $cssFile;
+      if( file_exists( $filePath ) ){
+        self::$cssFilesToConnect[] .= $filePath;
       }
     }
   }
