@@ -9,8 +9,8 @@ class App {
 
 
   public function __construct( Model $model, View $view, Controller $controller ) {
-    $this->model     = $model;
-    $this->view      = $view;
+    $this->model      = $model;
+    $this->view       = $view;
     $this->controller = $controller;
   }
 
@@ -19,10 +19,16 @@ class App {
 
 $app = new App( new Model,
                 new View,
-                new Controller
-                );
+                new Controller );
 
 // $app->model->load();
 // $app->controller->load();
+
+$app->view->loadHeader();
+$app->view->loadContent();
+
+
+// $app->view->getCssFiles();
+// $app->view->includeCssFiles();
 
 ?>
