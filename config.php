@@ -1,7 +1,13 @@
 <?php
 
-$modelPath      = "model/index.php";
-$viewPath       = "view/index.php";
-$controllerPath = "controller/index.php";
+class Config {
+  public $configDirs = array(
+    "model"      => "model/model.php",
+    "view"       => "view/view.php",
+    "controller" => "controller/controller.php",
+
+  );
+
+}
 
 ?>
