@@ -1,4 +1,9 @@
 <?php
+namespace App;
+
+use Model\Model;
+use View\View;
+use Controller\Controller;
 
 require_once( "core.php" );
 
@@ -26,9 +31,5 @@ $app = new App( new Model,
 
 $app->view->loadHeader();
 $app->view->loadContent();
-
-
-// $app->view->getCssFiles();
-// $app->view->includeCssFiles();
 
 ?>

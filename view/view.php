@@ -1,41 +1,43 @@
 <?php
+namespace View;
 
+// require_once( "app.php" );
 class View {
 
   public $templates = array(
     "zen",
   );
 
-  public $currentTemplate = "zen";
+  public static $currentTemplate = "zen";
 
-  public $trustedCssFiles = array(
+  public static $trustedCssFiles = array(
     "bootstrap.min.css" => "zen",
   );
 
-  public $cssFilesToConnect = array();
+  public static $cssFilesToConnect = array();
 
   // NOTE: Looks like schizophrenia. Maybe. But I really like to check everything.
-  public function getCssFiles() {
-    foreach( $this->trustedCssFiles as $cssFile => $template) {
-      if( file_exists( "view/templates/" . $this->currentTemplate."/css/" . $cssFile)){
-        $this->cssFilesToConnect[] .= $cssFile;
+  public static function getCssFiles() {
+    foreach( self::$trustedCssFiles as $cssFile => $template) {
+      if( file_exists( "view/templates/" . self::$currentTemplate."/css/" . $cssFile)){
+        self::$cssFilesToConnect[] .= $cssFile;
       }
     }
   }
 
   public function includeCssFiles() {
     // if($this->cssFilesToConnect)
-    foreach( $this->cssFilesToConnect as $file ) {
+    foreach( self::$cssFilesToConnect as $file ) {
       echo "<link rel='stylesheet' href='" . $file . "'>";
     }
   }
 
   public function loadHeader() {
-    require_once( "templates/" . $this->currentTemplate . "/header.php");
+    require_once( "view/templates/" . static::$currentTemplate . "/header.php");
   }
 
   public function loadContent() {
-    require_once( "templates/" . $this->currentTemplate . "/content.php");
+    require_once( "view/templates/" . static::$currentTemplate . "/content.php");
   }
 }
 

@@ -1,5 +1,5 @@
 <?php
-
+namespace Controller;
 class Controller {
   public $test = "Класс " . __CLASS__ . " в работе.";
 

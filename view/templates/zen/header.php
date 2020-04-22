@@ -1,3 +1,8 @@
+<?
+use View\View;
+require_once("app.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Zen</title>
   <?
-  $app->view->getCssFiles();
-  $app->view->includeCssFiles();
+  View::getCssFiles();
+  View::includeCssFiles();
   ?>
 </head>
