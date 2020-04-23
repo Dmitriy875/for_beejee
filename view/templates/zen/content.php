@@ -11,7 +11,23 @@ if( $_GET['name'] ) {
     $dbResult = Queries::getOrderBy( "SELECT * FROM task_book" );
   }
 
+// Users for select
+$dbSelectUsers = Queries::getOrderBy( "SELECT user FROM task_book" );
 
+$userNamesArr = array_column( $dbSelectUsers, 'user');
+$userNamesUniqArr = array_unique( $userNamesArr );
+
+// Emails for select
+$dbSelectEmails = Queries::getOrderBy( "SELECT email FROM task_book" );
+
+$emailArr = array_column( $dbSelectEmails, 'email');
+$emailUniqArr = array_unique( $emailArr );
+
+// Statuses for select
+$dbSelectStatus = Queries::getOrderBy( "SELECT status FROM task_book" );
+
+$statusArr = array_column( $dbSelectStatus, 'status');
+$statusUniqArr = array_unique( $statusArr );
 
 ?>
 <body>
@@ -26,7 +42,28 @@ if( $_GET['name'] ) {
 <div class="row justify-content-start justify-content-center justify-content-end">
   <div class="col-md-6">
     <div class="alert alert-info" role="alert">
-      <a href="?sort=user" class="alert-link">Sort by: User</a> | :: | <a href="?sort=email" class="alert-link">Sort by: Email</a> | :: | <a href="?sort=status" class="alert-link">Sort by: Status</a>
+      Sort by: User
+        <select class="" name="" onchange="if (this.value) window.location.href = this.value">
+          <option value="">Select</option>
+          <? foreach( $userNamesUniqArr as $userName ) {
+            echo "<option value='?name=$userName'><a href='?poo=1'>$userName</a></option>";
+          }?>
+        </select>
+       | :: | <span class="alert-link">Sort by:
+         <select class="" name="" onchange="if (this.value) window.location.href = this.value">
+           <option value="">Select</option>
+
+         <? foreach( $emailUniqArr as $userEmail ) {
+           echo "<option value='?email=$userEmail'>$userEmail</option>";
+         }?>
+       </select></span> | :: | <span class="alert-link">Sort by:
+         <select class="" name="" onchange="if (this.value) window.location.href = this.value">
+           <option value="">Select</option>
+           <? foreach( $statusUniqArr as $status ) {
+             echo "<option value='?status=$status'><a href='?poo=1'>$status</a></option>";
+           }?>
+         </select>
+       </span>
     </div>
 
       <? foreach( $dbResult as $person ): ?>
@@ -45,31 +82,26 @@ if( $_GET['name'] ) {
         <a href="?status=<?= $person['status']; ?>" class="alert-primary"> <?= $person['status']; ?></a>
       </div>
       <? endforeach ?>
-
-
-
-      <!-- <table class="table">
-        <thead>
-          <tr>
-            <th scope="col"><a href="?sort=status" class="alert-light">Status</a></th>
-            <th scope="col"><a href="?sort=name" class="alert-light">User name:</a></th>
-            <th scope="col"><a href="?sort=email" class="alert-light">Email:</a></th>
-            <th scope="col"><span class="alert-light">To do:</span></th>
-          </tr>
-        </thead>
-        <tbody>
-      <?// foreach( $dbResult as $person ): ?>
-      <tr>
-        <td><? $person['status']; ?></td>
-        <td><? $person['user']; ?></td>
-        <td><? $person['email']; ?></td>
-        <td><? $person['task']; ?></td>
-      </tr>
-      <? //endforeach ?> -->
-
-
       </tbody>
     </table>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
 </body>
