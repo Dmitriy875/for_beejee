@@ -1,6 +1,14 @@
 <?
 use Model\Queries;
+use View\View;
+use View\PaginationView;
+use Model\Model;
+use Model\PaginationModel;
+use Controller\PaginationController;
 
+
+
+// TODO: To take care vith that shame!
 if( $_GET['name'] ) {
   $dbResult = Queries::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'");
 } elseif ( $_GET['email'] ) {
@@ -29,12 +37,40 @@ $dbSelectStatus = Queries::getOrderBy( "SELECT status FROM task_book" );
 $statusArr = array_column( $dbSelectStatus, 'status');
 $statusUniqArr = array_unique( $statusArr );
 
+// FIXME: Replace all of that, what is higher
+
+
+
+$paginator = new PaginationController(  new PaginationView,
+                                        new PaginationModel );
+
+$paginator->getCurrentPage();
+$paginator->getPagesToShow();
+$paginator->getNumOfItemsToShow();
+$paginator->getNumOfAllPages();
+
+// TEMP: Paginator debug 
+print_r( $paginator );
+
 ?>
 <body>
 <div class="container">
-  <div class="jumbotron">
-    <h1 class="display-3">Zen task-table</h1>
-    <hr class="m-y-md">
+  <div class="jumbotron pt-4 bg-img">
+    <div class="row">
+      <div class="col-sm-2 offset-md-10">
+        <form class="" action="#" method="post" style="float:left">
+          <button id='sign' type="button" class="btn btn-light">Sign in</button>
+        </form>
+        <!-- <input type="submit" class="btn btn-light" name="" value="Sign in"> -->
+      </div>
+      <div class='col-sm-9'>
+        <h1 class="display-3 text-white">Zen task-table</h1>
+        <hr class="m-y-md">
+      </div>
+      <div id='signinhide'class="col-sm-3" style="display: none">
+
+      </div>
+    </div>
     </p>
 
   </div>
@@ -85,21 +121,36 @@ $statusUniqArr = array_unique( $statusArr );
       </tbody>
     </table>
 
+<?
+
+if($paginator)
+  echo "PAGINATOR";
+  else {
+    echo "NULL bitch";
+  }
+?>
+
     <nav aria-label="Page navigation example">
       <ul class="pagination">
+
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+        <?
+        for( $i = 0; $i < ( $paginator->getNumOfItemsToShow() ); $i++) {
+          echo '<li class="page-item"><a class="page-link" href="#">1</a></li>';
+        }
+        ?>
+
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
+
       </ul>
     </nav>
   </div>

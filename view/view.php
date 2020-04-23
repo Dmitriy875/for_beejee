@@ -33,12 +33,20 @@ class View {
     }
   }
 
+// NOTE: Paginator doesn't need to know about them:
   public function loadHeader() {
     require_once( "view/templates/" . static::$currentTemplate . "/header.php");
   }
 
   public function loadContent() {
     require_once( "view/templates/" . static::$currentTemplate . "/content.php");
+  }
+}
+
+
+class PaginationView extends View {
+  public function test() {
+    echo __CLASS__ . "подключен";
   }
 }
 
