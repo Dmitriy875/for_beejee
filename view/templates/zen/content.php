@@ -15,10 +15,8 @@ $paginator->getCurrentPage();
 $paginator->getNumOfItemsToShow();
 $paginator->getNumOfAllPages();
 
-$paginator->loadItemsOnSelectedPage();
-
-
-$dbResult = $paginator->model->selectByGetParam();
+// NOTE: Using GET-param and setting a number of items at page
+$dbResult = $paginator->model->selectByGetParam( $paginator->paginatorCurrentPage(), $paginator->getNumOfItemsToShow() );
 
 
 
@@ -112,15 +110,7 @@ $statusUniqArr = array_unique( $statusArr );
       <? endforeach ?>
       </tbody>
     </table>
-
-<?
-
-
-// TEMP: Paginator debug
-// print_r( $paginator );
-
-
-?>
+    
 
     <nav aria-label="Page navigation example">
       <ul class="pagination">
@@ -133,7 +123,7 @@ $statusUniqArr = array_unique( $statusArr );
 
         <?
         for( $i = 1; $i < ( $paginator->getNumOfAllPages() +1 ); $i++) {
-          echo '<li class="page-item"><a class="page-link" href="#">' . $i . '</a></li>';
+          echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.'">' . $i . '</a></li>';
         }
         ?>
 

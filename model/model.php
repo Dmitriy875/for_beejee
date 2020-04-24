@@ -13,18 +13,20 @@ abstract class Queries extends Model {
 
 class PaginationModel extends Queries {
 
-  public function selectByGetParam() {
+  public function selectByGetParam( $start, $limit ) {
+    $setLimit = "LIMIT " . $start;
+    $startFrom = ", " . $limit;
     if( $_GET['name'] ) {
-      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'");
+      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'" . $setLimit . $startFrom );
     } elseif ( $_GET['email'] ) {
-      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE email = '$_GET[email]'");
+      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE email = '$_GET[email]'" . $setLimit . $startFrom );
     } elseif ( $_GET['status'] ) {
-      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE status = '$_GET[status]'");
+      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE status = '$_GET[status]'" . $setLimit . $startFrom );
     } else {
-        $dbResult = self::getOrderBy( "SELECT * FROM task_book" );
+        $dbResult = self::getOrderBy( "SELECT * FROM task_book " . $setLimit . $startFrom );
       }
-    return $dbResult;
 
+    return $dbResult;
   }
 
 
