@@ -8,7 +8,7 @@ use Controller\PaginationController;
 
 
 
-// TODO: To take care vith that shame!
+// TODO: To take care with that shame!
 if( $_GET['name'] ) {
   $dbResult = Queries::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'");
 } elseif ( $_GET['email'] ) {
@@ -18,6 +18,10 @@ if( $_GET['name'] ) {
 } else {
     $dbResult = Queries::getOrderBy( "SELECT * FROM task_book" );
   }
+
+// TEMP:
+// print_r(Queries::getOrderBy( "SELECT * FROM task_book" ) );
+
 
 // Users for select
 $dbSelectUsers = Queries::getOrderBy( "SELECT user FROM task_book" );
@@ -41,16 +45,7 @@ $statusUniqArr = array_unique( $statusArr );
 
 
 
-$paginator = new PaginationController(  new PaginationView,
-                                        new PaginationModel );
 
-$paginator->getCurrentPage();
-$paginator->getPagesToShow();
-$paginator->getNumOfItemsToShow();
-$paginator->getNumOfAllPages();
-
-// TEMP: Paginator debug 
-print_r( $paginator );
 
 ?>
 <body>
@@ -123,11 +118,19 @@ print_r( $paginator );
 
 <?
 
-if($paginator)
-  echo "PAGINATOR";
-  else {
-    echo "NULL bitch";
-  }
+$paginator = new PaginationController(  new PaginationView,
+                                        new PaginationModel );
+
+$paginator->getCurrentPage();
+$paginator->getNumOfItemsToShow();
+$paginator->getNumOfAllPages();
+
+$paginator->loadItemsOnSelectedPage();
+
+// TEMP: Paginator debug
+// print_r( $paginator );
+
+
 ?>
 
     <nav aria-label="Page navigation example">
@@ -140,8 +143,8 @@ if($paginator)
         </li>
 
         <?
-        for( $i = 0; $i < ( $paginator->getNumOfItemsToShow() ); $i++) {
-          echo '<li class="page-item"><a class="page-link" href="#">1</a></li>';
+        for( $i = 1; $i < ( $paginator->getNumOfAllPages() +1 ); $i++) {
+          echo '<li class="page-item"><a class="page-link" href="#">' . $i . '</a></li>';
         }
         ?>
 

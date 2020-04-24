@@ -14,10 +14,9 @@ class Controller {
 }
 
 class PaginationController {
-  private $currentPage;
-  private $pagesToShow;
-  private $numOfItemsToShow;
   private $numOfAllItems;
+  private $numOfItemsToShow;
+  private $currentPage;
   private $numOfAllPages;
 
   public function getCurrentPage() {
@@ -27,20 +26,14 @@ class PaginationController {
         return $this->currentPage = 1;
   }
 
-  public function getPagesToShow() {
-    if( $_GET['pages_to_show'] ) {
-      $this->pagesToShow = $_GET['pages_to_show'];
-    } else
-        return $this->pagesToShow = 3; // NOTE: There can be less than three pages, be carefull
-  }
 
   public function getNumOfAllPages() {
-    if( $this->numOfAllItems <= 0 ) {
-      return $this->numOfAllPages = 1;
+    if( ( $this->numOfAllItems % $this->numOfItemsToShow) == 0 ) {
+      $num = $this->numOfAllItems / $this->numOfItemsToShow;
     } else {
-      $this->numOfAllPages = $this->numOfAllItems / $this->numOfItemsToShow;
-      return $this->numOfAllPages;
+        $num = round( $this->numOfAllItems / $this->numOfItemsToShow, PHP_ROUND_HALF_UP );
     }
+      return $this->numOfAllPages = $num;
   }
 
   public function getNumOfItemsToShow() {
@@ -49,7 +42,11 @@ class PaginationController {
 
 
   public function __construct( View $view, Model $model ) {
-    $this->numOfAllItems = $model->getNumOfItems();
+    $this->numOfAllItems = $model->getNumOfItems(true);
+  }
+
+  public function loadItemsOnSelectedPage() {
+    echo $this->currentPage;
   }
 
 }
