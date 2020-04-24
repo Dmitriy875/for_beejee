@@ -27,6 +27,9 @@ class PaginationController {
         return $this->currentPage = 1;
   }
 
+  public function paginatorCurrentPage() {
+    return ($this->currentPage -1) * $this->numOfItemsToShow;
+  }
 
   public function getNumOfAllPages() {
     if( ( $this->numOfAllItems % $this->numOfItemsToShow) == 0 ) {
@@ -45,10 +48,6 @@ class PaginationController {
   public function __construct( View $view, Model $model ) {
     $this->numOfAllItems = $model->getNumOfItems(true);
     $this->model = $model;
-  }
-
-  public function loadItemsOnSelectedPage() {
-    echo $this->currentPage;
   }
 
 }
