@@ -6,7 +6,27 @@ class Model {
 }
 
 
-class Queries extends Model {
+abstract class Queries extends Model {
+  public $sql = "SELECT * FROM task_book";
+
+}
+
+class PaginationModel extends Queries {
+
+  public function selectByGetParam() {
+    if( $_GET['name'] ) {
+      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'");
+    } elseif ( $_GET['email'] ) {
+      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE email = '$_GET[email]'");
+    } elseif ( $_GET['status'] ) {
+      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE status = '$_GET[status]'");
+    } else {
+        $dbResult = self::getOrderBy( "SELECT * FROM task_book" );
+      }
+    return $dbResult;
+
+  }
+
 
   public static function getOrderBy( $sql ) {
     $config = DatabaseConnection::getInstance();
@@ -15,11 +35,6 @@ class Queries extends Model {
     $result = $stmt->fetchAll();
     return $result;
   }
-}
-
-class PaginationModel extends Queries {
-
-  public $sql = "SELECT * FROM task_book";
 
   public function getNumOfItems() {
     $config = DatabaseConnection::getInstance();

@@ -18,6 +18,7 @@ class PaginationController {
   private $numOfItemsToShow;
   private $currentPage;
   private $numOfAllPages;
+  public $model;
 
   public function getCurrentPage() {
     if( $_GET['current_page'] ) {
@@ -43,6 +44,7 @@ class PaginationController {
 
   public function __construct( View $view, Model $model ) {
     $this->numOfAllItems = $model->getNumOfItems(true);
+    $this->model = $model;
   }
 
   public function loadItemsOnSelectedPage() {

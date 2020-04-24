@@ -8,42 +8,39 @@ use Controller\PaginationController;
 
 
 
-// TODO: To take care with that shame!
-if( $_GET['name'] ) {
-  $dbResult = Queries::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'");
-} elseif ( $_GET['email'] ) {
-  $dbResult = Queries::getOrderBy( "SELECT * FROM task_book WHERE email = '$_GET[email]'");
-} elseif ( $_GET['status'] ) {
-  $dbResult = Queries::getOrderBy( "SELECT * FROM task_book WHERE status = '$_GET[status]'");
-} else {
-    $dbResult = Queries::getOrderBy( "SELECT * FROM task_book" );
-  }
+$paginator = new PaginationController(  new PaginationView,
+                                        new PaginationModel );
 
-// TEMP:
-// print_r(Queries::getOrderBy( "SELECT * FROM task_book" ) );
+$paginator->getCurrentPage();
+$paginator->getNumOfItemsToShow();
+$paginator->getNumOfAllPages();
+
+$paginator->loadItemsOnSelectedPage();
+
+
+$dbResult = $paginator->model->selectByGetParam();
+
 
 
 // Users for select
-$dbSelectUsers = Queries::getOrderBy( "SELECT user FROM task_book" );
+$dbSelectUsers = PaginationModel::getOrderBy( "SELECT user FROM task_book" );
 
 $userNamesArr = array_column( $dbSelectUsers, 'user');
 $userNamesUniqArr = array_unique( $userNamesArr );
 
 // Emails for select
-$dbSelectEmails = Queries::getOrderBy( "SELECT email FROM task_book" );
+$dbSelectEmails = PaginationModel::getOrderBy( "SELECT email FROM task_book" );
 
 $emailArr = array_column( $dbSelectEmails, 'email');
 $emailUniqArr = array_unique( $emailArr );
 
 // Statuses for select
-$dbSelectStatus = Queries::getOrderBy( "SELECT status FROM task_book" );
+$dbSelectStatus = PaginationModel::getOrderBy( "SELECT status FROM task_book" );
 
 $statusArr = array_column( $dbSelectStatus, 'status');
 $statusUniqArr = array_unique( $statusArr );
 
 // FIXME: Replace all of that, what is higher
-
-
 
 
 
@@ -118,14 +115,6 @@ $statusUniqArr = array_unique( $statusArr );
 
 <?
 
-$paginator = new PaginationController(  new PaginationView,
-                                        new PaginationModel );
-
-$paginator->getCurrentPage();
-$paginator->getNumOfItemsToShow();
-$paginator->getNumOfAllPages();
-
-$paginator->loadItemsOnSelectedPage();
 
 // TEMP: Paginator debug
 // print_r( $paginator );
