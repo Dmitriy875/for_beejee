@@ -72,7 +72,7 @@ $statusUniqArr = array_unique( $statusArr );
         <select class="" name="" onchange="if (this.value) window.location.href = this.value">
           <option value="">Select</option>
           <? foreach( $userNamesUniqArr as $userName ) {
-            echo "<option value='?name=$userName'><a href='?poo=1'>$userName</a></option>";
+            echo "<option value='?name=$userName?select=some'><a href='?poo=1'>$userName</a></option>";
           }?>
         </select>
        | :: | <span class="alert-link">Sort by:

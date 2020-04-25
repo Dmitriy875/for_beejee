@@ -12,18 +12,41 @@ abstract class Queries extends Model {
 }
 
 class PaginationModel extends Queries {
+  public $sql = "SELECT * FROM task_book ";
+
+  public function getNumOfItems() {
+    if(  $_GET['name']  ) {
+      $this->sql .= "WHERE user = '$_GET[name]'";
+    }
+    elseif ( $_GET['email'] ) {
+      $this->sql .= "WHERE email = '$_GET[email]'";
+    }
+    elseif ( $_GET['status'] ) {
+      $this->sql .= "WHERE status = '$_GET[status]'";
+    }
+    else {
+      $this->sql;
+    }
+    $config = DatabaseConnection::getInstance();
+    $stmt	= $config->pdo->prepare( $this->sql );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+
+    // Count all notes in DB
+    return count( $result );
+  }
 
   public function selectByGetParam( $start, $limit ) {
-    $setLimit = "LIMIT " . $start;
+    $setLimit = " LIMIT " . $start;
     $startFrom = ", " . $limit;
     if( $_GET['name'] ) {
-      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE user = '$_GET[name]'" . $setLimit . $startFrom );
+      $dbResult = self::getOrderBy( $this->sql . $setLimit . $startFrom );
     } elseif ( $_GET['email'] ) {
-      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE email = '$_GET[email]'" . $setLimit . $startFrom );
+      $dbResult = self::getOrderBy( $this->sql . $setLimit . $startFrom );
     } elseif ( $_GET['status'] ) {
-      $dbResult = self::getOrderBy( "SELECT * FROM task_book WHERE status = '$_GET[status]'" . $setLimit . $startFrom );
+      $dbResult = self::getOrderBy( $this->sql . $setLimit . $startFrom );
     } else {
-        $dbResult = self::getOrderBy( "SELECT * FROM task_book " . $setLimit . $startFrom );
+        $dbResult = self::getOrderBy( $this->sql . $setLimit . $startFrom );
       }
     return $dbResult;
 
@@ -38,15 +61,6 @@ class PaginationModel extends Queries {
     return $result;
   }
 
-  public function getNumOfItems() {
-    $config = DatabaseConnection::getInstance();
-    $stmt	= $config->pdo->prepare( $this->sql );
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-
-    // Count all notes in DB
-    return count( $result );
-  }
 
   public function getAllItems() {
     $config = DatabaseConnection::getInstance();
