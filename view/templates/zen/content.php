@@ -16,7 +16,8 @@ $paginator->getNumOfItemsToShow();
 $paginator->getNumOfAllPages();
 
 // NOTE: Set GET-param as settings of number of items at one page
-$dbResult = $paginator->model;
+$dbResult = $paginator->model->selectByGetParam(  $paginator->paginatorCurrentPage(),
+                                                  $paginator->getNumOfItemsToShow() );
 
 
 // Users for select

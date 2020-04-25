@@ -54,8 +54,7 @@ class PaginationController {
     $this->numOfAllItems = $model->getNumOfItems();
 
     // NOTE: Set GET-param as settings of number of items at one page
-    $this->model = $model->selectByGetParam(  $this->paginatorCurrentPage(), // FIXME: DOESN'T WORK CORRECT!
-                                              $this->getNumOfItemsToShow() );
+    $this->model = $model;
 
 
     $this->dynamicNumOfPages = $this->selectByGetParam;
