@@ -68,30 +68,52 @@ $statusUniqArr = array_unique( $statusArr );
 <div class="row justify-content-start justify-content-center justify-content-end">
   <div class="col-md-6">
     <div class="alert alert-info" role="alert">
-      <span class="alert-link">Sort by: User
-        <select class="" name="" onchange="if (this.value) window.location.href = this.value">
-          <option value="">Select</option>
-          <? foreach( $userNamesUniqArr as $userName ) {
-            echo "<option value='?name=$userName&select=name'>$userName</option>";
-          }?>
-        </select></span> | :: |
 
-       <span class="alert-link">Sort by:
-         <select class="" name="" onchange="if (this.value) window.location.href = this.value">
-           <option value="">Select</option>
+      <table class="table">
 
-         <? foreach( $emailUniqArr as $userEmail ) {
-           echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
-         }?>
-       </select></span> | :: |
+          <tr>
+            <td><span class="alert-link">Sort by user: <span class="small"><a href="#">asc</a> <a href="#">desc</a></span></td>
 
-       <span class="alert-link">Sort by:
-         <select class="" name="" onchange="if (this.value) window.location.href = this.value">
+            <td>
+              <span class="alert-link">Sort by email: <span class="small"><a href="#">asc</a> <a href="#">desc</a></span></td>
+
+
+           <td><span class="alert-link">Sort by status: <span class="small"><a href="#">asc</a> <a href="#">desc</a></span></td>
+
+
+          </tr>
+          <tr>
+            <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
+                <option value="">Select</option>
+                <? foreach( $userNamesUniqArr as $userName ) {
+                  echo "<option value='?name=$userName&select=name'>$userName</option>";
+                }?>
+              </select></span></td>
+              <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
+               <option value="">Select</option>
+
+             <? foreach( $emailUniqArr as $userEmail ) {
+               echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
+             }?>
+           </select></span>
+         </td>
+         <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
            <option value="">Select</option>
            <? foreach( $statusUniqArr as $status ) {
              echo "<option value='?status=$status&select=status'>$status</option>";
            }?>
-         </select>
+         </select></td>
+          </tr>
+      </table>
+
+
+
+
+
+
+
+
+
        </span>
     </div>
 
@@ -147,7 +169,7 @@ $statusUniqArr = array_unique( $statusArr );
           </a>
         </li>
         <?php
-        if( $_GET )
+        if( $_GET AND $_GET['current_page'] != 1 )
           echo '<span><a href="/" class="page-link">reset</a></span>';
         ?>
 
