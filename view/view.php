@@ -43,8 +43,13 @@ class View {
 
 
 class PaginationView extends View {
-  public function test() {
-    echo __CLASS__ . "подключен";
+  public function statusColor( $color ) {
+    if( $color == "failed" )
+      return "danger";
+    elseif( $color == "complete" )
+      return "success";
+    elseif( $color == "in progress" )
+      return "primary";
   }
 }
 
