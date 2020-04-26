@@ -59,43 +59,49 @@ $statusUniqArr = array_unique( $statusArr );
         <hr class="m-y-md">
       </div>
       <div id='signinhide'class="col-sm-3" style="display: none">
-
       </div>
     </div>
-
   </div>
 </div>
 <div class="row justify-content-start justify-content-center justify-content-end">
   <div class="col-md-6">
     <div class="alert alert-info" role="alert">
 
+      <?php
+      if( $_GET['name'] ) {
+          $attr = "&name=".$_GET['name'];
+      }
+      if( $_GET['email'] ) {
+          $attr = "&email=".$_GET['email'];
+      }
+      if( $_GET['status'] ) {
+          $attr = "&status=".$_GET['status'];
+      }
+      if( $_GET['sort'] ) {
+          $sort = "&sort=".$_GET['sort']."&type=".$_GET['type'];
+      }
+      ?>
+
       <table class="table">
-
-          <tr>
-            <td><span class="alert-link">Sort by user: <span class="small"><a href="#">asc</a> <a href="#">desc</a></span></td>
-
-            <td>
-              <span class="alert-link">Sort by email: <span class="small"><a href="#">asc</a> <a href="#">desc</a></span></td>
-
-
-           <td><span class="alert-link">Sort by status: <span class="small"><a href="#">asc</a> <a href="#">desc</a></span></td>
-
-
+        <thead>  <tr>
+            <td><span class="alert-link">Sort by user: </span><span class="small"><a href="?sort=asc&type=user">asc</a> | <a href="?sort=desc&type=user">desc</a></span></td>
+            <td><span class="alert-link">Sort by email: </span><span class="small"><a href="?sort=asc&type=email">asc</a> | <a href="?sort=desc&type=email">desc</a></span></td>
+           <td><span class="alert-link">Sort by status: </span><span class="small"><a href="?sort=asc&type=status">asc</a> | <a href="?sort=desc&type=status">desc</a></span></td>
           </tr>
+        </thead>
           <tr>
             <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
                 <option value="">Select</option>
                 <? foreach( $userNamesUniqArr as $userName ) {
                   echo "<option value='?name=$userName&select=name'>$userName</option>";
                 }?>
-              </select></span></td>
-              <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
-               <option value="">Select</option>
-
-             <? foreach( $emailUniqArr as $userEmail ) {
-               echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
-             }?>
-           </select></span>
+              </select></td>
+            <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
+             <option value="">Select</option>
+               <? foreach( $emailUniqArr as $userEmail ) {
+                 echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
+               }?>
+                </select>
          </td>
          <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
            <option value="">Select</option>
@@ -105,16 +111,6 @@ $statusUniqArr = array_unique( $statusArr );
          </select></td>
           </tr>
       </table>
-
-
-
-
-
-
-
-
-
-       </span>
     </div>
 
       <?php foreach( $dbResult as $person ): ?>
@@ -143,33 +139,24 @@ $statusUniqArr = array_unique( $statusArr );
       <ul class="pagination">
 
         <li class="page-item">
-          <a class="page-link" href="?current_page=<?= $paginator->navPrevious() ?>" aria-label="Previous">
+          <a class="page-link" href="?current_page=<?= $paginator->navPrevious() . $attr.$sort ?>" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
 
-        <?php
-        if( $_GET['name'] ) {
-            $attr = "&name=".$_GET['name'];
-        }
-        if( $_GET['email'] ) {
-            $attr = "&email=".$_GET['email'];
-        }
-        if( $_GET['status'] ) {
-            $attr = "&status=".$_GET['status'];
-        }
+      <?php
         for( $i = 1; $i < ( $paginator->getNumOfAllPages() +1 ); $i++) {
-          echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.$attr.'">' . $i . '</a></li>';
+          echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.$attr.$sort.'">' . $i . '</a></li>';
         }
         ?>
 
         <li class="page-item">
-          <a class="page-link" href="?current_page=<?= $paginator->navNext() ?>" aria-label="Next">
+          <a class="page-link" href="?current_page=<?= $paginator->navNext() . $attr.$sort ?>" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
         <?php
-        if( $_GET AND $_GET['current_page'] != 1 )
+        if( $_GET )
           echo '<span><a href="/" class="page-link">reset</a></span>';
         ?>
 

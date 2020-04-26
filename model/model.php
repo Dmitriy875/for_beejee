@@ -19,7 +19,12 @@ class PaginationModel extends Queries {
 
   // NOTE: Returns nubmer of items matching the query $sql
   public function getNumOfItems() {
-    if(  isset( $_GET['name'] ) ) {
+    if( isset( $_GET['sort'] ) AND isset( $_GET['type'] ) )
+      $sort = " ORDER BY " . $_GET['type'] . " " . $_GET['sort'];
+
+
+
+    if( isset( $_GET['name'] ) ) {
       $this->sql .= "WHERE user = '$_GET[name]'";
     }
     elseif ( $_GET['email'] ) {
@@ -29,7 +34,7 @@ class PaginationModel extends Queries {
       $this->sql .= "WHERE status = '$_GET[status]'";
     }
     else {
-      $this->sql;
+      $this->sql .= $sort;
     }
     $config = DatabaseConnection::getInstance();
     $stmt	= $config->pdo->prepare( $this->sql );
