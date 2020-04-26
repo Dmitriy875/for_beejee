@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 use View\View;
 use View\PaginationView;
@@ -6,14 +7,10 @@ use Model\Model;
 use Model\PaginationModel;
 
 class Controller {
-  public $test = "Класс " . __CLASS__ . " в работе.";
 
-  public function load() {
-    echo $this->test;
-  }
 }
 
-class PaginationController {
+class PaginationController extends Controller {
   private $numOfAllItems;
   private $numOfItemsToShow;
   private $currentPage;
@@ -55,9 +52,6 @@ class PaginationController {
 
     // NOTE: Set GET-param as settings of number of items at one page
     $this->model = $model;
-
-
-    $this->dynamicNumOfPages = $this->selectByGetParam;
   }
 
 }

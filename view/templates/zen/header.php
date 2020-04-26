@@ -1,4 +1,5 @@
 <?php
+
 use View\View;
 require_once("app.php");
 
@@ -16,11 +17,10 @@ require_once("app.php");
   <title>Zen | Task-table</title>
 
   <?php
+
   View::getCssFiles();
   View::includeCssFiles();
 
-
-  // View::paginate();
   ?>
 
 </head>

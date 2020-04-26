@@ -1,5 +1,7 @@
 <?php
+
 use Config\Config;
+
 require_once( "config.php " );
 
 set_include_path( get_include_path() . PATH_SEPARATOR . "c:/OpenServer/domains/beejee-test/");
@@ -15,8 +17,6 @@ class Core {
     foreach( $this->config as $className => $dirPath ) {
       if( file_exists( $dirPath ) ) {
          require_once( $dirPath );
-         // if( !class_exists( $className ) )
-          // die("No");
           // TODO: Make Exceptions
       }
     }

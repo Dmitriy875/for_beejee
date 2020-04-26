@@ -1,4 +1,5 @@
-<?
+<?php
+
 use Model\Queries;
 use View\View;
 use View\PaginationView;
@@ -92,7 +93,7 @@ $statusUniqArr = array_unique( $statusArr );
        </span>
     </div>
 
-      <? foreach( $dbResult as $person ): ?>
+      <?php foreach( $dbResult as $person ): ?>
       <div class="alert alert-secondary" role="alert">
 
         For user:
@@ -107,7 +108,7 @@ $statusUniqArr = array_unique( $statusArr );
 
         <a href="?status=<?= $person['status']; ?>" class="alert-primary"> <?= $person['status']; ?></a>
       </div>
-      <? endforeach ?>
+    <?php endforeach ?>
       </tbody>
     </table>
 
@@ -121,7 +122,7 @@ $statusUniqArr = array_unique( $statusArr );
           </a>
         </li>
 
-        <?
+        <?php
         for( $i = 1; $i < ( $paginator->getNumOfAllPages() +1 ); $i++) {
           echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.'">' . $i . '</a></li>';
         }

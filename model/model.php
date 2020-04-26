@@ -1,6 +1,9 @@
 <?php
+
 namespace Model;
 use Config\DatabaseConnection;
+
+
 class Model {
 
 }
@@ -14,8 +17,9 @@ abstract class Queries extends Model {
 class PaginationModel extends Queries {
   public $sql = "SELECT * FROM task_book ";
 
+  // NOTE: Returns nubmer of items matching the query $sql
   public function getNumOfItems() {
-    if(  $_GET['name']  ) {
+    if(  isset( $_GET['name'] ) ) {
       $this->sql .= "WHERE user = '$_GET[name]'";
     }
     elseif ( $_GET['email'] ) {

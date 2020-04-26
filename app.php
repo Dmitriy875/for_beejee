@@ -26,8 +26,6 @@ $app = new App( new Model,
                 new View,
                 new Controller );
 
-// $app->model->load();
-// $app->controller->load();
 
 $app->view->loadHeader();
 $app->view->loadContent();

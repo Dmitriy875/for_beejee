@@ -1,7 +1,6 @@
 <?php
 namespace View;
 
-// require_once( "app.php" );
 class View {
 
   public $templates = array(
@@ -27,7 +26,6 @@ class View {
   }
 
   public function includeCssFiles() {
-    // if($this->cssFilesToConnect)
     foreach( self::$cssFilesToConnect as $file ) {
       echo "<link rel='stylesheet' href='" . $file . "'>";
     }
