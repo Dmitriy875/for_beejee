@@ -48,7 +48,7 @@ $statusUniqArr = array_unique( $statusArr );
 ?>
 <body>
 <div class="container">
-  <div class="jumbotron pt-4">
+  <div class="jumbotron pt-4 pb-0">
     <div class="row">
       <div class="col-sm-3 offset-md-9">
         <form action="/" method="POST">
@@ -61,13 +61,13 @@ $statusUniqArr = array_unique( $statusArr );
             <label for="exampleInputPassword1">Password</label>
             <input type="password" name="admin_password" class="form-control" id="exampleInputPassword1">
           </div>
-          <button type="submit" name="auth_try" class="btn btn-primary">Submit</button>
+          <button type="submit" name="auth_try" class="btn btn-primary" value='auth'>Sign in</button>
+          <!-- <input type="submit" class="btn btn-light" name="" value="Sign in"> -->
         </form>
-        <!-- <input type="submit" class="btn btn-light" name="" value="Sign in"> -->
       </div>
       <div class='col-sm-9'>
         <h1 class="display-3 text-white">Zen task-table</h1>
-        <hr class="m-y-md">
+        <!-- <hr class="m-y-md"> -->
       </div>
       <!-- <div id='signinhide'class="col-sm-3" style="display: none"> -->
       </div>

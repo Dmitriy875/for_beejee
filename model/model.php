@@ -99,4 +99,27 @@ class TaskModel extends Model {
   }
 }
 
+
+
+
+class AuthModel extends Model {
+  private $authPermission = false;
+
+  public function authQuery( $authData ) {
+
+    $sql = "SELECT name, password
+            FROM users WHERE name = '$authData[admin_name]'AND password = '$authData[admin_password]'";
+
+    $config = DatabaseConnection::getInstance();
+    $stmt	= $config->pdo->prepare( $sql );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    if( !empty( $result ) ) {
+      return $this->authPermission = true;
+    }
+    else
+      return $this->authPermission = false;
+  }
+}
+
 ?>

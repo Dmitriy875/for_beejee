@@ -78,9 +78,14 @@ class TaskView extends View {
         return $success = "<p><div class='alert alert-success'>Task is successfully created.</div></p>";
 
       }
-      // print_r( $_POST );
       return $error;
     }
+  }
+}
+
+class AuthView extends View {
+  public function loadAuthForm() {
+    file_get_contents( "view/templates/zen/auth_form.html" );
   }
 }
 

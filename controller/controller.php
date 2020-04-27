@@ -81,4 +81,37 @@ class TaskController {
   }
 }
 
+
+
+
+
+
+class AuthController extends Controller {
+  use Utilities;
+  public function safeAuth() {
+    $safePost = array();
+    if( isset( $_POST['auth_try'] ) ) {
+      foreach( $_POST as $postItemName => $postItemValue ) {
+        $safePost[$postItemName] = self::disarm( $postItemValue );
+      }
+      return $safePost;
+    }
+  }
+
+  public function auth( $answer ) {
+    if( $answer == true ) {
+      session_start();
+      $_SESSION['authenticated'] = true;
+      header( "Location: /admin.php ");
+    }
+  }
+}
+
+trait Utilities {
+  public function disarm( $param ) {
+		return trim( htmlspecialchars( strip_tags( $param ) ) );
+	}
+}
+
+
 ?>
