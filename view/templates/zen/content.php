@@ -1,11 +1,13 @@
 <?php
-
+use Model\Model;
 use Model\Queries;
+use Model\PaginationModel;
+use Model\TaskModel;
 use View\View;
 use View\PaginationView;
-use Model\Model;
-use Model\PaginationModel;
+use View\TaskView;
 use Controller\PaginationController;
+use Controller\TaskController;
 
 
 
@@ -46,11 +48,20 @@ $statusUniqArr = array_unique( $statusArr );
 ?>
 <body>
 <div class="container">
-  <div class="jumbotron pt-4 bg-img">
+  <div class="jumbotron pt-4">
     <div class="row">
-      <div class="col-sm-2 offset-md-10">
-        <form class="" action="#" method="post" style="float:left">
-          <button id='sign' type="button" class="btn btn-light">Sign in</button>
+      <div class="col-sm-3 offset-md-9">
+        <form action="/" method="POST">
+          <div class="form-group">
+            <label for="exampleInputEmail1">User</label>
+            <input type="text" name="admin_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" name="admin_password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <button type="submit" name="auth_try" class="btn btn-primary">Submit</button>
         </form>
         <!-- <input type="submit" class="btn btn-light" name="" value="Sign in"> -->
       </div>
@@ -58,7 +69,7 @@ $statusUniqArr = array_unique( $statusArr );
         <h1 class="display-3 text-white">Zen task-table</h1>
         <hr class="m-y-md">
       </div>
-      <div id='signinhide'class="col-sm-3" style="display: none">
+      <!-- <div id='signinhide'class="col-sm-3" style="display: none"> -->
       </div>
     </div>
   </div>
@@ -162,6 +173,16 @@ $statusUniqArr = array_unique( $statusArr );
 
       </ul>
     </nav>
+    <?php
+    $taskCreator = new TaskController(  new TaskModel,
+                                        new TaskView  );
+
+    echo $taskCreator->view->formValidation();
+    $taskCreator->view->getForm();
+    if( $taskCreator->view->queryPermission == true ) {
+      $taskCreator->model->createTask( $_POST );
+    }
+    ?>
   </div>
 </div>
 </body>

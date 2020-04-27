@@ -66,9 +66,19 @@ class PaginationController extends Controller {
 
     // NOTE: Set GET-param as settings of number of items at one page
     $this->model = $model;
-    $this->view = $view;
+    $this->view  = $view;
   }
 
+}
+
+class TaskController {
+  public $model;
+  public $view;
+
+  public function __construct( Model $model, View $view ) {
+    $this->model = $model;
+    $this->view  = $view;
+  }
 }
 
 ?>

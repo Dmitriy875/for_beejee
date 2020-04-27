@@ -53,4 +53,35 @@ class PaginationView extends View {
   }
 }
 
+class TaskView extends View {
+  protected $queryPermission = false;
+
+  public function getForm() {
+    require_once( "view/templates/zen/form.php" );
+  }
+  public function formValidation() {
+    $error = "";
+    if( $_POST['create_try'] ) {
+      if( $_POST['email']
+          AND (!strstr( $_POST['email'], '@' )
+              OR strlen( $_POST['email'] ) < 5 ) )  {
+        $error .= "<p><div class='alert alert-danger'> Incorrect <b>email</b> value</div></p>";
+      }
+
+      foreach( $_POST as $name => $postItem ) {
+        if( empty( $postItem ) ) {
+          $error .= "<p><div class='alert alert-danger'> <b>" . ucfirst( $name ) . "</b> field is empty!</div></p>";
+        }
+      }
+      if( empty( $error ) ) {
+        $this->queryPermission = true;
+        return $success = "<p><div class='alert alert-success'>Task is successfully created.</div></p>";
+
+      }
+      // print_r( $_POST );
+      return $error;
+    }
+  }
+}
+
 ?>

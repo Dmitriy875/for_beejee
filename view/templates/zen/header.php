@@ -1,7 +1,6 @@
 <?php
 
 use View\View;
-require_once("app.php");
 
 ?>
 <!DOCTYPE html>

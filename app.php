@@ -1,8 +1,8 @@
 <?php
 namespace App;
 
-use Model\Model;
 use View\View;
+use Model\Model;
 use Controller\Controller;
 
 require_once( "core.php" );
@@ -29,5 +29,6 @@ $app = new App( new Model,
 
 $app->view->loadHeader();
 $app->view->loadContent();
+
 
 ?>

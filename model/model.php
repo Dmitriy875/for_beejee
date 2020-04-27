@@ -82,4 +82,21 @@ class PaginationModel extends Queries {
   }
 }
 
+class TaskModel extends Model {
+  public function createTask( $insecurePost ) {
+    $name   = trim( htmlspecialchars( strip_tags( $insecurePost['name'] ) ) );
+    $email  = trim( htmlspecialchars( strip_tags( $insecurePost['email'] ) ) );
+    $task   = trim( htmlspecialchars( strip_tags( $insecurePost['task'] ) ) );
+
+    $sql = "INSERT INTO task_book (user, email, task)
+            VALUES ('$name', '$email', '$task')";
+
+    $config = DatabaseConnection::getInstance();
+    $stmt	= $config->pdo->prepare( $sql );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+  }
+}
+
 ?>
