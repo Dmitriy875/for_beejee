@@ -1,26 +1,19 @@
 <?php
+use App\Paginator;
 use Model\Model;
 use Model\Queries;
 use Model\PaginationModel;
 use Model\TaskModel;
 use View\View;
-use View\PaginationView;
 use View\TaskView;
-use Controller\PaginationController;
+use View\PaginationView;
+// use Controller\PaginationController;
 use Controller\TaskController;
 
 
 
-$paginator = new PaginationController(  new PaginationView,
-                                        new PaginationModel );
 
-$paginator->getCurrentPage();
-$paginator->getNumOfItemsToShow();
-$paginator->getNumOfAllPages();
 
-// NOTE: Set GET-param as settings of number of items at one page
-$dbResult = $paginator->model->selectByGetParam(  $paginator->paginatorCurrentPage(),
-                                                  $paginator->getNumOfItemsToShow() );
 
 
 // Users for select
@@ -45,6 +38,7 @@ $statusUniqArr = array_unique( $statusArr );
 
 
 
+
 ?>
 <body>
 <div class="container">
@@ -55,21 +49,16 @@ $statusUniqArr = array_unique( $statusArr );
           <div class="form-group">
             <label for="exampleInputEmail1">User</label>
             <input type="text" name="admin_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" name="admin_password" class="form-control" id="exampleInputPassword1">
           </div>
           <button type="submit" name="auth_try" class="btn btn-primary" value='auth'>Sign in</button>
-          <!-- <input type="submit" class="btn btn-light" name="" value="Sign in"> -->
         </form>
       </div>
       <div class='col-sm-9'>
         <h1 class="display-3 text-white">Zen task-table</h1>
-        <!-- <hr class="m-y-md"> -->
-      </div>
-      <!-- <div id='signinhide'class="col-sm-3" style="display: none"> -->
       </div>
     </div>
   </div>
@@ -124,7 +113,9 @@ $statusUniqArr = array_unique( $statusArr );
       </table>
     </div>
 
-      <?php foreach( $dbResult as $person ): ?>
+      <?php
+
+      foreach( $dbResult as $person ): ?>
 
       <div class="alert alert-secondary" role="alert">
 
@@ -150,19 +141,21 @@ $statusUniqArr = array_unique( $statusArr );
       <ul class="pagination">
 
         <li class="page-item">
-          <a class="page-link" href="?current_page=<?= $paginator->navPrevious() . $attr.$sort ?>" aria-label="Previous">
+          <a class="page-link" href="?current_page=<?= $paginator->controller->navPrevious() . $attr.$sort ?>" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
 
       <?php
-        for( $i = 1; $i < ( $paginator->getNumOfAllPages() +1 ); $i++) {
+      echo $numOfItems;
+      // echo $paginator->controller->getNumOfAllPages();
+        for( $i = 1; $i < ( $paginator->controller->getNumOfAllPages( $numOfAllItems ) +1 ); $i++) {
           echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.$attr.$sort.'">' . $i . '</a></li>';
         }
         ?>
 
         <li class="page-item">
-          <a class="page-link" href="?current_page=<?= $paginator->navNext() . $attr.$sort ?>" aria-label="Next">
+          <a class="page-link" href="?current_page=<?= $paginator->controller->navNext() . $attr.$sort ?>" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>

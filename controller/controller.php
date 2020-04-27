@@ -1,10 +1,11 @@
 <?php
 
 namespace Controller;
+
 use View\View;
-use View\PaginationView;
+// use View\PaginationView;
 use Model\Model;
-use Model\PaginationModel;
+// use Model\PaginationModel;
 
 class Controller {
 
@@ -17,7 +18,7 @@ class PaginationController extends Controller {
   private $numOfAllPages;
   public $model;
   public $view;
-  public $dynamicNumOfPages;
+
 
   // NOTE: Get number of current paga from $_GET
   public function getCurrentPage() {
@@ -32,17 +33,17 @@ class PaginationController extends Controller {
     return $this->numOfItemsToShow = 3;
   }
 
-  // NOTE: Number of page for sql-query, $start for LIMIT ...
+  // NOTE: Number of page for sql-query, $start for LIMIT in selectByGetParam()
   public function paginatorCurrentPage() {
     return ($this->currentPage -1) * $this->numOfItemsToShow;
   }
 
   // NOTE: Number of pages on paginator scale
-  public function getNumOfAllPages() {
-    if( ( $this->numOfAllItems % $this->numOfItemsToShow) == 0 )
-      $num = $this->numOfAllItems / $this->numOfItemsToShow;
+  public function getNumOfAllPages( $numOfAllItems ) {
+    if( ( $numOfAllItems % $this->numOfItemsToShow) == 0 )
+      $num = $numOfAllItems / $this->numOfItemsToShow;
     else
-      $num = round( $this->numOfAllItems / $this->numOfItemsToShow, PHP_ROUND_HALF_UP );
+      $num = round( $numOfAllItems / $this->numOfItemsToShow, PHP_ROUND_HALF_UP );
       return $this->numOfAllPages = $num;
   }
 
@@ -60,14 +61,11 @@ class PaginationController extends Controller {
       return $this->currentPage;
   }
 
-  public function __construct( View $view, Model $model ) {
-    // NOTE: Saves number of items, getting by sql-query from model
-    $this->numOfAllItems = $model->getNumOfItems();
-
-    // NOTE: Set GET-param as settings of number of items at one page
-    $this->model = $model;
-    $this->view  = $view;
-  }
+  // public function __construct( Model $model ) {
+  //   // NOTE: Saves number of items, getting by sql-query from model
+  //   $this->numOfAllItems = $model->getNumOfItems();
+  //
+  // }
 
 }
 

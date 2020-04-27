@@ -32,13 +32,26 @@ class Core {
 $core = new Core( new Config );
 $core->findAppComponents();
 
-class Auth {
-  public function __construct( Model $model, View $view, Controller $controller ) {
-    $this->model = $model;
-    $this->view = $view;
+
+class Paginator {
+  public $model;
+  public $view;
+  public $controller;
+
+  public function __construct( Controller $controller, View $view, Model $model ) {
+    $this->model      = $model;
+    $this->view       = $view;
     $this->controller = $controller;
   }
 }
 
+
+class Auth {
+  public function __construct( Model $model, View $view, Controller $controller ) {
+    $this->model      = $model;
+    $this->view       = $view;
+    $this->controller = $controller;
+  }
+}
 
 ?>

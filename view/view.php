@@ -36,8 +36,10 @@ class View {
     require_once( "view/templates/" . static::$currentTemplate . "/header.php");
   }
 
-  public function loadContent() {
+  public function loadContent( $Result ) {
     require_once( "view/templates/" . static::$currentTemplate . "/content.php");
+    $dbResult = $Result;
+    print_r( $dbResult );
   }
 }
 
@@ -54,7 +56,7 @@ class PaginationView extends View {
 }
 
 class TaskView extends View {
-  protected $queryPermission = false;
+  public $queryPermission = false;
 
   public function getForm() {
     require_once( "view/templates/zen/form.php" );

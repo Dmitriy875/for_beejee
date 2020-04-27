@@ -2,12 +2,18 @@
 namespace App;
 
 use Core\Auth;
-use View\View;
+use Core\Paginator;
 use Model\Model;
 use Model\AuthModel;
-use Controller\Controller;
+use Model\PaginationModel;
+use View\PaginationView;
 use View\AuthView;
+use View\View;
+use Controller\Controller;
 use Controller\AuthController;
+use Controller\PaginationController;
+
+
 require_once( "core.php" );
 
 class App {
@@ -21,8 +27,6 @@ class App {
     $this->view       = $view;
     $this->controller = $controller;
   }
-
-
 }
 
 $app = new App( new Model,
@@ -30,15 +34,37 @@ $app = new App( new Model,
                 new Controller );
 
 
+$paginator = new Paginator(   new PaginationController,
+                              new PaginationView,
+                              new PaginationModel   );
 
 
-$auth = new Auth( new AuthModel, new AuthView, new AuthController );
+
+$auth = new Auth( new AuthModel,
+                  new AuthView,
+                  new AuthController );
+
+// Auth
 $safeAuthData = $auth->controller->safeAuth();
-$authResult = $auth->model->authQuery( $safeAuthData );
+$authResult   = $auth->model->authQuery( $safeAuthData );
+
+// Paginator
+
+$numOfAllItems = $app->model->getNumOfItems();
+
+$paginator->controller->getCurrentPage();
+$paginator->controller->getNumOfItemsToShow();
+
+// NOTE: Set GET-param as settings of number of items at one page
+
+
+
+$dbResult = $paginator->model->selectByGetParam(  $paginator->controller->paginatorCurrentPage(),
+                                                  $paginator->controller->getNumOfItemsToShow() );
 
 
 
 
-// $auth->auth();
+
 
 ?>
