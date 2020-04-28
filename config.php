@@ -9,7 +9,6 @@ class Config {
     "controller" => "controller/controller.php",
 
   );
-
 }
 
 class DatabaseConnection {
@@ -45,8 +44,5 @@ class DatabaseConnection {
 
 $dbConnection = DatabaseConnection::getInstance();
 $dbConnection->getConnection();
-
-
-
 
 ?>

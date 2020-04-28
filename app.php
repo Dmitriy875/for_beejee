@@ -6,12 +6,15 @@ use Core\Paginator;
 use Model\Model;
 use Model\AuthModel;
 use Model\PaginationModel;
+use Model\TaskModel;
 use View\PaginationView;
 use View\AuthView;
 use View\View;
+use View\TaskView;
 use Controller\Controller;
 use Controller\AuthController;
 use Controller\PaginationController;
+use Controller\TaskController;
 
 
 require_once( "core.php" );
@@ -39,6 +42,8 @@ $paginator = new Paginator(   new PaginationController,
                               new PaginationModel   );
 
 
+$taskCreator = new TaskController(  new TaskModel,
+                                    new TaskView  );
 
 $auth = new Auth( new AuthModel,
                   new AuthView,
@@ -47,6 +52,8 @@ $auth = new Auth( new AuthModel,
 // Auth
 $safeAuthData = $auth->controller->safeAuth();
 $authResult   = $auth->model->authQuery( $safeAuthData );
+$auth->view->notify( $authResult );
+
 
 // Paginator
 
@@ -59,12 +66,11 @@ $paginator->controller->getNumOfItemsToShow();
 
 
 
+
 $dbResult = $paginator->model->selectByGetParam(  $paginator->controller->paginatorCurrentPage(),
                                                   $paginator->controller->getNumOfItemsToShow() );
 
-
-
-
+$app->controller->session();
 
 
 ?>

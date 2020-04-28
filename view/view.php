@@ -89,6 +89,14 @@ class AuthView extends View {
   public function loadAuthForm() {
     file_get_contents( "view/templates/zen/auth_form.html" );
   }
+  public function notify( $reject ) {
+    // if( $reject == false )
+    return "<div class='alert alert-danger'>Incorrect data.</div>";
+  }
+}
+
+class AdminView extends View {
+
 }
 
 ?>

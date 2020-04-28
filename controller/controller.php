@@ -3,11 +3,18 @@
 namespace Controller;
 
 use View\View;
-// use View\PaginationView;
 use Model\Model;
-// use Model\PaginationModel;
+use Core\Utilities;
 
 class Controller {
+  public function session() {
+    session_start();
+
+    if( $_GET['auth'] === "logout" )  {
+      session_unset();
+      session_destroy();
+    }
+  }
 
 }
 
@@ -60,13 +67,6 @@ class PaginationController extends Controller {
     else
       return $this->currentPage;
   }
-
-  // public function __construct( Model $model ) {
-  //   // NOTE: Saves number of items, getting by sql-query from model
-  //   $this->numOfAllItems = $model->getNumOfItems();
-  //
-  // }
-
 }
 
 class TaskController {
@@ -105,11 +105,14 @@ class AuthController extends Controller {
   }
 }
 
-trait Utilities {
-  public function disarm( $param ) {
-		return trim( htmlspecialchars( strip_tags( $param ) ) );
-	}
+class AdminController extends Controller {
+  public function sessionCheck() {
+    if( !$_SESSION['authenticated'] ) {
+      header( "Location: /");
+      return false;
+    } else
+        return true;
+  }
 }
-
 
 ?>

@@ -7,12 +7,7 @@ use Model\TaskModel;
 use View\View;
 use View\TaskView;
 use View\PaginationView;
-// use Controller\PaginationController;
 use Controller\TaskController;
-
-
-
-
 
 
 
@@ -37,25 +32,32 @@ $statusUniqArr = array_unique( $statusArr );
 // FIXME: Replace all of that, what is higher
 
 
-
-
 ?>
 <body>
 <div class="container">
   <div class="jumbotron pt-4 pb-0">
     <div class="row">
       <div class="col-sm-3 offset-md-9">
+      <?php
+
+      if( $_SESSION['authenticated']): ?>
+      <a href="admin.php" class="btn btn-light">Admin</a>
+          <a href="?auth=logout" class="btn btn-light">Logout</a>
+      <?php else: ?>
         <form action="/" method="POST">
           <div class="form-group">
-            <label for="exampleInputEmail1">User</label>
-            <input type="text" name="admin_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <!-- <label for="exampleInputEmail1">User</label> -->
+            <input type="text" name="admin_name" placeholder="Login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="admin_password" class="form-control" id="exampleInputPassword1">
+            <!-- <label for="exampleInputPassword1">Password</label> -->
+            <input type="password" name="admin_password" placeholder="Password" class="form-control" id="exampleInputPassword1">
           </div>
           <button type="submit" name="auth_try" class="btn btn-primary" value='auth'>Sign in</button>
         </form>
+        <? echo $deny ?>
+      <?php endif ?>
+
       </div>
       <div class='col-sm-9'>
         <h1 class="display-3 text-white">Zen task-table</h1>
@@ -126,7 +128,13 @@ $statusUniqArr = array_unique( $statusArr );
           ( <a href="?email=<?= $person['email']; ?>" class="small"><?= $person['email']; ?></a> )
         </div>
 
-        Task: <span class="alert-link"><?= $person['task']; ?></span>
+        <div class="row">
+          <div class="col-sm-9">
+            Task: <span class="alert-link"><?= $person['task']; ?></span>
+          </div>
+
+          <div class="col-sm-3 text-right"><?php if( $person['admin_edit'] ) echo "<small>Edited by admin</small>"; ?></div>
+        </div>
 
         <div class="clearfix">
           <a href="?status=<?= $person['status']; ?>" class="alert-<?= $paginator->view->statusColor( $person['status'] ) ?>"> <?= $person['status']; ?></a>
@@ -167,9 +175,6 @@ $statusUniqArr = array_unique( $statusArr );
       </ul>
     </nav>
     <?php
-    $taskCreator = new TaskController(  new TaskModel,
-                                        new TaskView  );
-
     echo $taskCreator->view->formValidation();
     $taskCreator->view->getForm();
     if( $taskCreator->view->queryPermission == true ) {

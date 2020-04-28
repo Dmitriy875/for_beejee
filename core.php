@@ -54,4 +54,21 @@ class Auth {
   }
 }
 
+class Admin {
+  public $model;
+
+  public function __construct( Model $model, View $view, Controller $controller ) {
+    $this->model      = $model;
+    $this->view       = $view;
+    $this->controller = $controller;
+
+  }
+}
+
+trait Utilities {
+  public function disarm( $param ) {
+		return trim( htmlspecialchars( strip_tags( $param ) ) );
+	}
+}
+
 ?>
