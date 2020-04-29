@@ -98,7 +98,7 @@ $logInCheck = $admin->controller->sessionCheck();
                       } else
                           echo "<option value='$status'>$status</option>";
                       }
-
+                      // без POST
                       else {
                         if( $taskItem['status'] == $status )
                           echo "<option value='$status' $selected>$status</option>";
