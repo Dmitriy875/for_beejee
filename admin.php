@@ -93,8 +93,8 @@ $logInCheck = $admin->controller->sessionCheck();
                   foreach( $uniqueStatuses as $status ) {
 
                     if( $_POST['status'] AND ($_POST['id'] ) == $taskItem['id'] ) {
-                      if( $taskItem['status'] == $status ){
-                        echo "<option value='$_POST[status]' $selected>$_POST[status]</option>";
+                      if( $status == $_POST[status] ){
+                        echo "<option value='$status' $selected>$status</option>";
                       } else
                           echo "<option value='$status'>$status</option>";
                       }
