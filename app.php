@@ -52,7 +52,8 @@ $auth = new Auth( new AuthModel,
 // Auth
 $safeAuthData = $auth->controller->safeAuth();
 $authResult   = $auth->model->authQuery( $safeAuthData );
-$auth->view->notify( $authResult );
+if( !$authResult )
+  $alert = $auth->view->notify( $safeAuthData );
 
 
 // Paginator

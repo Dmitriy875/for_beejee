@@ -87,12 +87,25 @@ class TaskController {
 class AuthController extends Controller {
   use Utilities;
   public function safeAuth() {
+    $error = array();
     $safePost = array();
-    if( isset( $_POST['auth_try'] ) ) {
-      foreach( $_POST as $postItemName => $postItemValue ) {
-        $safePost[$postItemName] = self::disarm( $postItemValue );
+    if( $_POST['auth_try'] ) {
+      if(!$_POST['admin_name'] AND !$_POST['admin_password'])
+        $error['error'][] = 'Enter anything';
+
+      if( !$_POST['admin_name'] )
+        $error['error'][] = 'Enter user name';
+      if( !$_POST['admin_password'] )
+        $error['error'][] = 'Enter password';
+
+      if( empty( $error ) ) {
+        foreach( $_POST as $postItemName => $postItemValue ) {
+          $safePost[$postItemName] = self::disarm( $postItemValue );
+        }
+        return $safePost;
+      } else {
+        return $error;
       }
-      return $safePost;
     }
   }
 

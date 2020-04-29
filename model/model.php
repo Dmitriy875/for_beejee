@@ -118,10 +118,12 @@ class TaskModel extends Model {
 
 
 class AuthModel extends Model {
-  private $authPermission = false;
+  private $authPermission;
 
   public function authQuery( $safeAuthData ) {
-
+    if( $safeAuthData["error"] )
+      return false;
+    $error = "";
     $sql = "SELECT name, password
             FROM users WHERE name = '$safeAuthData[admin_name]'AND password = '$safeAuthData[admin_password]'";
 
@@ -129,11 +131,10 @@ class AuthModel extends Model {
     $stmt	= $config->pdo->prepare( $sql );
     $stmt->execute();
     $result = $stmt->fetchAll();
-    if( !empty( $result ) ) {
+    if( $result ) {
       return $this->authPermission = true;
     }
-    else
-      return $this->authPermission = false;
+    // return $this->authPermission = false;
   }
 }
 

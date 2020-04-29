@@ -90,8 +90,8 @@ class AuthView extends View {
     file_get_contents( "view/templates/zen/auth_form.html" );
   }
   public function notify( $reject ) {
-    // if( $reject == false )
-    return "<div class='alert alert-danger'>Incorrect data.</div>";
+      for( $i = 0; $i < count( $reject['error'] ); $i++ )
+        return "<span class='text-danger'>".$reject['error'][$i]."</span>";
   }
 }
 

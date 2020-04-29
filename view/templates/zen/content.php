@@ -53,9 +53,15 @@ $statusUniqArr = array_unique( $statusArr );
             <!-- <label for="exampleInputPassword1">Password</label> -->
             <input type="password" name="admin_password" placeholder="Password" class="form-control" id="exampleInputPassword1">
           </div>
-          <button type="submit" name="auth_try" class="btn btn-primary" value='auth'>Sign in</button>
+          <div class="row">
+            <div class="col-sm-5">
+              <button type="submit" name="auth_try" class="btn btn-primary" value='auth'>Sign in</button>
+            </div>
+            <div class="col-sm-7">
+              <? if( $_POST['auth_try'] ) echo  $alert ?>
+            </div>
+          </div>
         </form>
-        <? echo $deny ?>
       <?php endif ?>
 
       </div>
